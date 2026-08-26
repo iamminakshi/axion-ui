@@ -1,4 +1,5 @@
-name: Build & Push Docker Image
+```yaml
+name: Build & Push Axion UI Docker Image
 
 on:
   push:
@@ -7,15 +8,16 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_IMAGE: devopsinsiders/axion-ui
+  DOCKER_IMAGE: iamminakshi/axion-ui
 
 jobs:
   build-and-push:
-    name: Build & Push UI Image to Docker Hub
+    name: Build & Push Axion UI Image
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repository
+
+      # 1. Checkout your GitHub repository
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -25,19 +27,19 @@ jobs:
 
       # 3. Login to Docker Hub
       - name: Login to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 4. Generate Docker image tags and labels
+      # 4. Generate Docker image metadata
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.DOCKER_IMAGE }}
           tags: |
-            type=sha,prefix=
+            type=sha
             type=raw,value=latest,enable={{is_default_branch}}
 
       # 5. Build and push Docker image
