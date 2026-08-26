@@ -8,7 +8,9 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_IMAGE: iamminakshi/axion-ui
+    REGISTRY: ghcr.io
+  # Evaluates to 'asign796/axion-ui'
+    IMAGE_NAME: iamminakshi/axion-ui
 
 jobs:
   build-and-push:
